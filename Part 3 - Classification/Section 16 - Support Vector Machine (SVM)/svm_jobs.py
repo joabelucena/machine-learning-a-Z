@@ -28,10 +28,12 @@ X_train = sc.fit_transform(X_train)
 X_test = sc.transform(X_test)
 
 # Fitting SVM to the Training set
-
+from sklearn.svm import SVC
+classifier = SVC(kernel = 'linear', random_state = 0)
+classifier.fit(X_train, y_train)
 
 # Predicting the Test set results
-y_pred = SVM.predict(X_test)
+y_pred = classifier.predict(X_test)
 
 # Making the Confusion Matrix
 from sklearn.metrics import confusion_matrix
@@ -42,7 +44,7 @@ from matplotlib.colors import ListedColormap
 X_set, y_set = X_train, y_train
 X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1, stop = X_set[:, 0].max() + 1, step = 0.01),
                      np.arange(start = X_set[:, 1].min() - 1, stop = X_set[:, 1].max() + 1, step = 0.01))
-plt.contourf(X1, X2, SVM.predict(np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),
+plt.contourf(X1, X2, classifier.predict(np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),
              alpha = 0.75, cmap = ListedColormap(('red', 'green')))
 plt.xlim(X1.min(), X1.max())
 plt.ylim(X2.min(), X2.max())
@@ -60,7 +62,7 @@ from matplotlib.colors import ListedColormap
 X_set, y_set = X_test, y_test
 X1, X2 = np.meshgrid(np.arange(start = X_set[:, 0].min() - 1, stop = X_set[:, 0].max() + 1, step = 0.01),
                      np.arange(start = X_set[:, 1].min() - 1, stop = X_set[:, 1].max() + 1, step = 0.01))
-plt.contourf(X1, X2, SVM.predict(np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),
+plt.contourf(X1, X2, classifier.predict(np.array([X1.ravel(), X2.ravel()]).T).reshape(X1.shape),
              alpha = 0.75, cmap = ListedColormap(('red', 'green')))
 plt.xlim(X1.min(), X1.max())
 plt.ylim(X2.min(), X2.max())
